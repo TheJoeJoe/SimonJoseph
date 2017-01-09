@@ -4,10 +4,11 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import GUIpractice.components.Action;
-import GUIpractice.components.TextLabel;
-import GUIpractice.components.visible;
-import GUIpractice.sampleGames.ClickableScreen;
+import guiPractice.components.Action;
+import guiPractice.components.TextLabel;
+import guiPractice.components.Visible;
+import guiPractice.ClickableScreen;
+import guiPractice.GUIApplication;
 
 public class SimonScreenJoseph extends ClickableScreen implements Runnable {
 
@@ -28,7 +29,7 @@ public class SimonScreenJoseph extends ClickableScreen implements Runnable {
 
 	@Override
 	public void run() {
-		 label.setText("");
+		 changeText("");
 		    nextRound();
 	}
 
@@ -49,16 +50,20 @@ public class SimonScreenJoseph extends ClickableScreen implements Runnable {
 	private void playSequence() {
 			ButtonInterfaceJoseph b = null;	
 			for(MoveInterfaceJoseph m: move){
-				if(b!=null)b.dim();
-				b = m.getButton();
-				b.highlight();
+				if(b!=null){
+					b.dim();
+				
+					b = m.getButton();
+					b.highlight();
 				try {
-					Thread.sleep((long)(2000*(2.0/(roundNumber+2))));
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+						Thread.sleep((long)(2000*(2.0/(roundNumber+2))));
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 				}
+				
 			}
-			b.dim();
+			
 	}
 
 	private void changeText(String string) {
@@ -70,8 +75,7 @@ public class SimonScreenJoseph extends ClickableScreen implements Runnable {
 		}
 	}		
 
-	@Override
-	public void initAllObjects(List<visible> viewObjects) {
+	public void initAllObjects(ArrayList<Visible> viewObjects) {
 		addButtons();
 		progress = getProgress();
 		label = new TextLabel(130, 230, 300, 40, "Let's play Simon!");
@@ -86,7 +90,7 @@ public class SimonScreenJoseph extends ClickableScreen implements Runnable {
 	}
 
 	private MoveInterfaceJoseph randomMove() {
-		ButtonInterfaceJoseph b;
+		ButtonInterfaceJoseph b = null;
 		int random = (int) (Math.random()*button.length);
 		while(random == lastSelectedButton){
 			random = (int) (Math.random()*button.length);
@@ -96,28 +100,28 @@ public class SimonScreenJoseph extends ClickableScreen implements Runnable {
 	}
 
 	private MoveInterfaceJoseph getMove(ButtonInterfaceJoseph b) {
-		// TODO Auto-generated method stub
-		return null;
+		return new MoveKat();
 	}
 
 	/**
 	 * Placeholder until partner finishes implementation of ProgressInterface
 	 */
 	private ProgressInterfaceJoseph getProgress() {
-		// TODO Auto-generated method stub
-		return null;
+		return new ProgressKat();
 	}
 
 	private void addButtons() {
 		int numberOfButtons = 6;
 		Color[] color = { Color.blue, Color.yellow, Color.red, Color.green, Color.orange, Color.cyan };
+		button = new ButtonInterfaceJoseph[numberOfButtons];
 		for (int i = 0; i < numberOfButtons; i++) {
-			final ButtonInterfaceJoseph b = getAButton();
+			button[i] = getAButton();
 			button[i].setColor(color[i]);
-			button[i].setX((int)(100*Math.cos(i*Math.PI/(numberOfButtons))));
-			button[i].setY((int)(100*Math.sin(i*Math.PI/(numberOfButtons))));
+			button[i].setX((int)(200+100*Math.cos(i*Math.PI/(numberOfButtons))));
+			button[i].setY((int)(200+100*Math.sin(i*Math.PI/(numberOfButtons))));
+			final ButtonInterfaceJoseph b =button[i];
 			button[i].setAction(new Action(){
-
+				
 				public void act(){
 					if(acceptingInput){
 						
@@ -157,13 +161,17 @@ public class SimonScreenJoseph extends ClickableScreen implements Runnable {
 	}
 
 	protected void gameOver() {
-		// TODO Auto-generated method stub
-		
+		progress.gameOver();
 	}
 
 	private ButtonInterfaceJoseph getAButton() {
-		// TODO Auto-generated method stub
-		return null;
+		return new ButtonKat();
 	}
+
+	
+
+	
+
+	
 
 }

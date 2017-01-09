@@ -1,8 +1,8 @@
 package simonFinished;
 
-import GUIpractice.components.visible;
+import guiPractice.components.Visible;
 
-public interface ProgressInterfaceJoseph extends visible {
+public interface ProgressInterfaceJoseph extends Visible {
 
 	void gameOver();
 	
