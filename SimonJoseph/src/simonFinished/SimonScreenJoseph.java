@@ -48,23 +48,23 @@ public class SimonScreenJoseph extends ClickableScreen implements Runnable {
 	}
 
 	private void playSequence() {
-			ButtonInterfaceJoseph b = null;	
-			for(MoveInterfaceJoseph m: move){
-				if(b!=null){
-					b.dim();
-				
-					b = m.getButton();
-					b.highlight();
-				try {
-						Thread.sleep((long)(2000*(2.0/(roundNumber+2))));
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+		ButtonInterfaceJoseph b = null;	
+		for(MoveInterfaceJoseph m: move){
+			if(b!=null){
+				b.dim();
+			
+				b = m.getButton();
+				b.highlight();
+			try {
+					Thread.sleep((long)(2000*(2.0/(roundNumber+2))));
+				} catch (InterruptedException e) {
+					e.printStackTrace();
 				}
-				
 			}
 			
-	}
+		}
+		
+}
 
 	private void changeText(String string) {
 		try{
@@ -112,23 +112,20 @@ public class SimonScreenJoseph extends ClickableScreen implements Runnable {
 
 	private void addButtons() {
 		int numberOfButtons = 6;
+		int[][] coordinates = {{50,100}, {100,100}, {150,100}, {200,100}, {250,100}, {300,100}};
 		Color[] color = { Color.blue, Color.yellow, Color.red, Color.green, Color.orange, Color.cyan };
 		button = new ButtonInterfaceJoseph[numberOfButtons];
 		for (int i = 0; i < numberOfButtons; i++) {
 			button[i] = getAButton();
 			button[i].setColor(color[i]);
-			button[i].setX((int)(200+100*Math.cos(i*Math.PI/(numberOfButtons))));
-			button[i].setY((int)(200+100*Math.sin(i*Math.PI/(numberOfButtons))));
+			button[i].setX(coordinates[i][0]);
+			button[i].setY(coordinates[i][1]);
 			final ButtonInterfaceJoseph b =button[i];
-			button[i].setAction(new Action(){
+			b.setAction(new Action(){
 				
 				public void act(){
-					if(acceptingInput){
-						
-					}
-				
-				
-				Thread blink = new Thread(new Runnable(){
+					if(acceptingInput){			
+						Thread blink = new Thread(new Runnable(){
 
 					public void run(){
 						b.highlight();
@@ -151,15 +148,14 @@ public class SimonScreenJoseph extends ClickableScreen implements Runnable {
 						Thread nextRound = new Thread(SimonScreenJoseph.this);
 						nextRound.start();
 					}
-					
 					}
+				}
 
-				});
+			});
 			viewObjects.add(b);
-		}
 		
 	}
-
+	}
 	protected void gameOver() {
 		progress.gameOver();
 	}
