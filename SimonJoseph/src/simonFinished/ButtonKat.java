@@ -17,6 +17,7 @@ public class ButtonKat extends Component implements ButtonInterfaceJoseph {
 	
 	public ButtonKat() {
 		super(0, 0, 50, 50);
+		on=false;
 		
 	}
 
@@ -58,16 +59,15 @@ public class ButtonKat extends Component implements ButtonInterfaceJoseph {
 
 	@Override
 	public void update(Graphics2D g) {
-		if(on){
-			g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
-			g.setColor(Color.gray);
-			g.fillOval(getX(), getY(), getWidth(), getHeight());
+		if(on){
+			g.setColor(Color.lightGray);
+			g.fillOval(0, 0, getWidth(), getHeight());
 		}else{
-			g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-					RenderingHints.VALUE_ANTIALIAS_ON);
+			
 			g.setColor(color);
-			g.fillOval(getX(), getY(), getWidth(), getHeight());
+			g.fillOval(0, 0, getWidth(), getHeight());
 		}
 		
 	}
