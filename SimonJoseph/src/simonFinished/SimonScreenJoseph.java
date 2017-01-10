@@ -29,13 +29,14 @@ public class SimonScreenJoseph extends ClickableScreen implements Runnable {
 
 	@Override
 	public void run() {
-		 changeText("");
+		label.setText("");
 		    nextRound();
 	}
 
 	private void nextRound() {
 		acceptingInput = false;	
 		roundNumber ++;
+		move.add(randomMove());
 		progress.setRound(roundNumber);
 		progress.setSequenceSize(move.size());
 		changeText("Simon's turn");
@@ -49,32 +50,21 @@ public class SimonScreenJoseph extends ClickableScreen implements Runnable {
 	}
 
 	private void playSequence() {
-//		ButtonInterfaceJoseph b = null;	
-//		for(MoveInterfaceJoseph m: move){
-//			if(b!=null){
-//				b.dim();
-//			
-//				b = m.getButton();
-//				b.highlight();
-//			
-//			try {
-//					Thread.sleep((long)(2000*(2.0/(roundNumber+2))));
-//				} catch (InterruptedException e) {
-//					e.printStackTrace();
-//				}
-//			b.dim();	
-//			}
-//		}
-		ButtonInterfaceJoseph b = null;
+		ButtonInterfaceJoseph b = null;	
 		for(MoveInterfaceJoseph m: move){
-			if(b!=null)b.dim();
-			b = m.getButton();
-			b.highlight();
+			if(b!=null)
+				b.dim();
+			
+				b = m.getButton();
+				b.highlight();
+			
 			try {
-				Thread.sleep((long)(2000*(2.0/(roundNumber+2))));
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+					Thread.sleep((long)(2000*(2.0/(roundNumber+2))));
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				
+			
 		}
 		b.dim();
 		
@@ -90,7 +80,7 @@ public class SimonScreenJoseph extends ClickableScreen implements Runnable {
 	}		
 
 	public void initAllObjects(ArrayList<Visible> viewObjects) {
-		addButtons();
+		addButtons(viewObjects);
 		progress = getProgress();
 		label = new TextLabel(130, 230, 300, 40, "Let's play Simon!");
 		move = new ArrayList<MoveInterfaceJoseph>();
@@ -124,7 +114,7 @@ public class SimonScreenJoseph extends ClickableScreen implements Runnable {
 		return new ProgressKat();
 	}
 
-	private void addButtons() {
+	private void addButtons(ArrayList<Visible> viewObjects) {
 		int numberOfButtons = 6;
 		int[][] coordinates = {{50,100}, {100,100}, {150,100}, {200,100}, {250,100}, {300,100}};
 		Color[] color = { Color.blue, Color.yellow, Color.red, Color.green, Color.orange, Color.cyan };
