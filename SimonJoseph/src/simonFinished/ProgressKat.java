@@ -40,8 +40,7 @@ public class ProgressKat extends Component implements ProgressInterfaceJoseph {
 	@Override
 	public void update(Graphics2D g) {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		FontMetrics fm = g.getFontMetrics();
-		g.setColor(Color.white);
+		g.setColor(Color.lightGray);
 		g.fillRect(getX(), getY(), getWidth(), getHeight());
 		g.setColor(Color.black);
 	

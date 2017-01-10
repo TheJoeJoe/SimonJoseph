@@ -16,10 +16,10 @@ public class SimonScreenJoseph extends ClickableScreen implements Runnable {
 	private ButtonInterfaceJoseph[] button;
 	private ProgressInterfaceJoseph progress;
 	private ArrayList<MoveInterfaceJoseph> move;
-	int roundNumber;
-	boolean acceptingInput;
-	int sequenceIndex;
-	int lastSelectedButton;
+	private int roundNumber;
+	private boolean acceptingInput;
+	private int sequenceIndex;
+	private	int lastSelectedButton;
 
 	public SimonScreenJoseph(int width, int height) {
 		super(width, height);
@@ -42,27 +42,41 @@ public class SimonScreenJoseph extends ClickableScreen implements Runnable {
 		label.setText("");
 		playSequence();
 		changeText("Your turn");
+		label.setText("");
 		acceptingInput = true;
 		sequenceIndex = 0;
 
 	}
 
 	private void playSequence() {
-		ButtonInterfaceJoseph b = null;	
+//		ButtonInterfaceJoseph b = null;	
+//		for(MoveInterfaceJoseph m: move){
+//			if(b!=null){
+//				b.dim();
+//			
+//				b = m.getButton();
+//				b.highlight();
+//			
+//			try {
+//					Thread.sleep((long)(2000*(2.0/(roundNumber+2))));
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				}
+//			b.dim();	
+//			}
+//		}
+		ButtonInterfaceJoseph b = null;
 		for(MoveInterfaceJoseph m: move){
-			if(b!=null){
-				b.dim();
-			
-				b = m.getButton();
-				b.highlight();
+			if(b!=null)b.dim();
+			b = m.getButton();
+			b.highlight();
 			try {
-					Thread.sleep((long)(2000*(2.0/(roundNumber+2))));
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+				Thread.sleep((long)(2000*(2.0/(roundNumber+2))));
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
-			
 		}
+		b.dim();
 		
 }
 
@@ -96,11 +110,11 @@ public class SimonScreenJoseph extends ClickableScreen implements Runnable {
 			random = (int) (Math.random()*button.length);
 		}
 		lastSelectedButton = random;
-		return getMove(b);
+		return getMove(button[random]);
 	}
 
 	private MoveInterfaceJoseph getMove(ButtonInterfaceJoseph b) {
-		return new MoveKat();
+		return new MoveKat(b);
 	}
 
 	/**
@@ -115,13 +129,14 @@ public class SimonScreenJoseph extends ClickableScreen implements Runnable {
 		int[][] coordinates = {{50,100}, {100,100}, {150,100}, {200,100}, {250,100}, {300,100}};
 		Color[] color = { Color.blue, Color.yellow, Color.red, Color.green, Color.orange, Color.cyan };
 		button = new ButtonInterfaceJoseph[numberOfButtons];
+		
 		for (int i = 0; i < numberOfButtons; i++) {
 			button[i] = getAButton();
 			button[i].setColor(color[i]);
 			button[i].setX(coordinates[i][0]);
 			button[i].setY(coordinates[i][1]);
 			final ButtonInterfaceJoseph b =button[i];
-			b.setAction(new Action(){
+			button[i].setAction(new Action(){
 				
 				public void act(){
 					if(acceptingInput){			
@@ -153,7 +168,7 @@ public class SimonScreenJoseph extends ClickableScreen implements Runnable {
 
 			});
 			viewObjects.add(b);
-		
+			
 	}
 	}
 	protected void gameOver() {

@@ -4,7 +4,7 @@ public class MoveKat implements MoveInterfaceJoseph {
 
 	private ButtonInterfaceJoseph b;
 	
-	public MoveKat() {
+	public MoveKat(ButtonInterfaceJoseph b) {
 		this.b=b;
 	}
 
